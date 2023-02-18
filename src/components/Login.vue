@@ -32,10 +32,10 @@
 
 <script>
 import Auth from '@/apis/auth'
-Auth.getInfo()
-.then(data => {
-  console.log(data);
-})
+// Auth.getInfo()
+// .then(data => {
+//   console.log(data);
+// })
 
 
 // request('/auth')
@@ -85,14 +85,18 @@ export default {
         this.register.notice = result2.notice
         return
       }
-      this.register.isError = false
-      this.register.notice = ''
-      console.log(`开始组册, username: ${this.register.username} , password: ${this.register.password}`)
+
       Auth.register({
         username: this.register.username,
         password: this.register.password
       }).then(data => {
+        this.register.notice = ''
+        this.register.isError = false
+        this.$router.push({path: 'notebooks'})
         console.log(data);
+      }).catch(data => {
+        this.register.isError = true
+        this.register.notice = data.msg
       })
 
 
@@ -116,14 +120,17 @@ export default {
         this.login.notice = result2.notice
         return
       }
-      this.login.isError = false
-      this.login.notice = ''
-      console.log(`开始登录, username: ${this.login.username} , password: ${this.login.password}`)
+
       Auth.login({
-        username: this.register.username,
-        password: this.register.password
+        username: this.login.username,
+        password: this.login.password
       }).then(data => {
-        console.log(data);
+        this.login.isError = false
+        this.login.notice = ''
+        this.$router.push({path: 'notebooks'})
+      }).catch(data => {
+        this.login.isError = true
+        this.login.notice = data.msg 
       })
 
 

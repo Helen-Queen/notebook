@@ -1,8 +1,9 @@
 import axios from 'axios'
+import baseURLConfig from './config-baseURL'
 // 对于所有的post请求我可以统一的设置content-type
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 // 设置baseurl,这是服务端线上地址接口baseurl域名
-axios.defaults.baseURL = 'https://note-server.hunger-valley.com/'
+axios.defaults.baseURL = baseURLConfig.baseURL
 // 现象：当前得域名和请求得接口不一致，第一次登录成功，但是在刷新得时候没有登录成功，看请求头，没有cookie。下面一句就是来解决出现得这个现象。
 axios.defaults.withCredentials = true;
 
