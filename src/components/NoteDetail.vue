@@ -5,12 +5,21 @@
 </template>
   
 <script>
+import Auth from '@/apis/auth.js'
 
 export default {
     data() {
         return {
-            msg: '笔记详情页'
+            msg: '笔记详情列表'
         }
+    },
+    created() {
+        Auth.getInfo()
+        .then(res => {
+            if(!res.isLogin) {
+                this.$router.push({path: '/login'})
+            }
+        })
     }
 }
 </script>

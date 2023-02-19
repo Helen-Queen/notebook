@@ -1,4 +1,5 @@
 <template>
+    <!-- 三个图标 -->
     <div id="sidebar">
         <avatar></avatar>
         <div class="icons">
@@ -21,10 +22,9 @@ export default {
     },
     methods: {
         logout() {
-            console.log('logout');
             Auth.logout()
             .then(data => {
-                console.log(data);
+                this.$router.push({path: 'login'})
             })
         }
     }

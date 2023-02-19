@@ -32,6 +32,7 @@
 
 <script>
 import Auth from '@/apis/auth'
+import Bus from '@/helpers/bus.js'
 // Auth.getInfo()
 // .then(data => {
 //   console.log(data);
@@ -90,10 +91,10 @@ export default {
         username: this.register.username,
         password: this.register.password
       }).then(data => {
-        this.register.notice = ''
         this.register.isError = false
+        this.register.notice = ''
+        Bus.$emit('userInfo',{username : this.register.username})
         this.$router.push({path: 'notebooks'})
-        console.log(data);
       }).catch(data => {
         this.register.isError = true
         this.register.notice = data.msg
@@ -127,6 +128,8 @@ export default {
       }).then(data => {
         this.login.isError = false
         this.login.notice = ''
+        // 触发bus
+        Bus.$emit('userInfo', { username: this.login.username })
         this.$router.push({path: 'notebooks'})
       }).catch(data => {
         this.login.isError = true
@@ -188,7 +191,7 @@ export default {
 
   .main {
     flex: 1;
-    background: #36bc64 url(//cloud.hunger-valley.com/17-12-13/38476998.jpg-middle) center center no-repeat;
+    background: #36bc64 url() center center no-repeat;
     background-size: contain;
   }
 

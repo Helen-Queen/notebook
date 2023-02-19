@@ -14,7 +14,7 @@ export default function request(url,type = 'GET',data = {}) {
         let option = {
             url,
             method: type,
-            ValidateStates(status) {
+            validateStatus(status) {
                 return (status >=200 && status < 300) || status === 400
             }
         }
