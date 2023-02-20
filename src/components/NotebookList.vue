@@ -7,7 +7,7 @@
       <div class="layout">
         <h3>笔记本列表({{ notebooks.length }})</h3>
         <div class="book-list">
-          <router-link v-for="notebook in notebooks" :key="notebook.id" to="/note/1" class="notebook">
+          <router-link v-for="notebook in notebooks" :key="notebook.id" :to="`/note?notebookId=${notebook.id}`" class="notebook">
             <div>
               <span class="iconfont icon-notebook"></span> {{ notebook.title }}
               <span>{{ notebook.noteCounts }}</span>
@@ -29,11 +29,13 @@
 import Auth from '@/apis/auth.js'
 import Notebooks from '@/apis/notebooks.js'
 import {friendlyDate} from '@/helpers/util.js'
+import {mapState,mapActions,mapGetters} from 'vuex'
+
 
 export default {
   data() {
     return {
-      notebooks: [],
+      // notebooks: [],
     }
   },
   created() {
@@ -44,13 +46,23 @@ export default {
         }
         this.notebooks = res.data
       })
-      Notebooks.getAll() 
-        .then(res => {
-          this.notebooks = res.data
-        })
+      // Notebooks.getAll() 
+      //   .then(res => {
+      //     this.notebooks = res.data
+      //   })
+      this.$store.dispatch('getNotebooks')
       
   },
+  computed: {
+    ...mapGetters(['notebooks'])
+  },
   methods: {
+    ...mapActions([
+      'getNotebooks',
+      'addNotebook',
+      'updateNotebook',
+      'deleteNotebook'
+  ]),
     onCreate() {
       // console.log('用log做检查');
       let title = window.prompt('创建笔记本')
@@ -82,9 +94,8 @@ export default {
         Notebooks.deleteNotebook(notebook.id)
         .then(res => {
           console.log(res)
-          this.notebook.splice(this.notebooks.indexOf(notebook),1)
+          this.notebooks.splice(this.notebooks.indexOf(notebook),1)
           alert(res.msg)
-          
         })
       }
       
@@ -95,5 +106,5 @@ export default {
   
 
 <style lang="less" scoped>
-@import url(../assets/css/notebook-list.css);
+@import url(../assets/css/notebook-list.less);
 </style>

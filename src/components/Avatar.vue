@@ -36,7 +36,7 @@ export default {
 }
 </script>
 
-<style scope>
+<style scoped>
 span {
   display: inline-block;
   width: 30px;
