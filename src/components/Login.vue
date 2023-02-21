@@ -31,8 +31,7 @@
 </template>
 
 <script>
-import Auth from '@/apis/auth'
-import Bus from '@/helpers/bus.js'
+import {mapGetters,mapActions} from 'vuex'
 // Auth.getInfo()
 // .then(data => {
 //   console.log(data);
@@ -65,6 +64,11 @@ export default {
     }
   },
   methods: {
+    // 把login重命名为loginUser，{}括起来
+    ...mapActions({
+      loginUser:'login', 
+      registerUser:'register'
+    }),
     showRegister() {
       this.isShowRegister = true
       this.isShowLogin = false
@@ -87,13 +91,12 @@ export default {
         return
       }
 
-      Auth.register({
+      this.registerUser({
         username: this.register.username,
         password: this.register.password
-      }).then(data => {
+      }).then(() => {
         this.register.isError = false
         this.register.notice = ''
-        Bus.$emit('userInfo',{username : this.register.username})
         this.$router.push({path: 'notebooks'})
       }).catch(data => {
         this.register.isError = true
@@ -122,14 +125,12 @@ export default {
         return
       }
 
-      Auth.login({
+      this.loginUser({
         username: this.login.username,
         password: this.login.password
-      }).then(data => {
+      }).then(() => {
         this.login.isError = false
         this.login.notice = ''
-        // 触发bus
-        Bus.$emit('userInfo', { username: this.login.username })
         this.$router.push({path: 'notebooks'})
       }).catch(data => {
         this.login.isError = true

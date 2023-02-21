@@ -15,7 +15,7 @@ export default {
             .then(res => {
                 res.data = res.data.sort((notebook1,notebook2) => notebook1.createdAt < notebook2.createdAt)
                 res.data.forEach(notebook => {
-                    console.log(friendlyDate(notebook.createdAt));
+                    // console.log(friendlyDate(notebook.createdAt));
                     notebook.createdAtfriendly = friendlyDate(notebook.createdAt)
                     notebook.updatedAtFriendly = friendlyDate(notebook.updatedAt)
                 })
@@ -37,6 +37,7 @@ export default {
             .then(res => {
                 res.data.createdAtfriendly = friendlyDate(res.data.createdAt)
                 res.data.updatedAtFriendly = friendlyDate(res.data.updatedAt)
+                resolve(res)
             }).catch(err => {
                 reject(err);
             })

@@ -2,35 +2,26 @@
   <span :title="username">{{ slug }}</span>
 </template>
 <script>
-import Auth from '@/apis/auth.js'
-import Bus from '@/helpers/bus.js'
+import { mapGetters,mapActions } from 'vuex'
+
 export default {
   data() {
-    return {
-      username: '未登录'
-    }
+    return {}
+  },
+  methods: {
+    ...mapActions({
+      'setUser':'checkLogin'
+    })
   },
   created() {
-    // 监听
-    Bus.$on('userInfo',user=>{
-      this.username = user.username
-    })
-
-
-
-    // 获取数据
-    Auth.getInfo()
-    .then(res => {
-      console.log(res);
-      if(res.isLogin) {
-        this.username = res.data.username
-      }
-    })
+    this.setUser()
   },
   computed: {
-    slug() {
-      return this.username.charAt(0)
-    }
+    ...mapGetters([
+      'username',
+      'slug'
+    ]),
+    
   }
 
 }

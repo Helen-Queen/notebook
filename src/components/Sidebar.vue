@@ -15,7 +15,7 @@
 
 <script>
 import avatar from '@/components/Avatar.vue'
-import Auth from '@/apis/auth';
+
 export default {
     components: {
         avatar
