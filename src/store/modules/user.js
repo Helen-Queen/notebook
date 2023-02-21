@@ -33,9 +33,17 @@ const actions = {
         commit('setUser', { user: res.data })
       })
   },
+  logout({ commit },payload = {path: '/login'}) {
+    return Auth.logout()
+        .then(res => {
+          commit('setUser', { user: null })
+          // 当前的router 引进来
+          router.push(payload)
+        })
+  },
 // payload传递进来得对象{ path: '/login' }
   checkLogin({ commit,state }, payload) {
-    if(state != null) return Promise.resolve()
+    if(state.user != null) return Promise.resolve()
     return Auth.getInfo()
       .then(res => {
         if(!res.isLogin) {

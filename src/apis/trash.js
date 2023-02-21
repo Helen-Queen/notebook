@@ -3,7 +3,7 @@ import { friendlyDate } from '@/helpers/util.js'
 
 const URL = {
   GET: '/notes/trash',
-  REVERT: '/notes/:notedId/revert',
+  REVERT: '/notes/:noteId/revert',
   DELETE: '/notes/:noteId/confirm'
 }
 
